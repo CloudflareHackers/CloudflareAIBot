@@ -168,7 +168,8 @@ export default {
 					}
 				} else if (obj.hasOwnProperty('callback_query')) {
                     // get the data text and generate photo and send as reply to it with model_number based on thread id
-                    const data = obj.callback_query.message.reply_to_message.text
+                    const random = Math.floor(Math.random() * 1000000)
+                    const data = obj.callback_query.message.reply_to_message.text + " " + random
                     const chat_id = obj.callback_query.message.chat.id
                     const message_id = obj.callback_query.data
                     let model_number = 1
