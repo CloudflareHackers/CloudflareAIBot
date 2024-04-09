@@ -56,23 +56,30 @@ export default {
                   },
                 })
               } else if (obj.message.message_thread_id) {
-                let model_number = 1
-                if (obj.message.message_thread_id == 334) {
-                    model_number = 1
+                if (obj.message.message_thread_id == 6807) {
+                    let model_number = 4
+                    await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+                    return new Response("OK", {
+                        status: 200,
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                    })
                 }
-                await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
-                return new Response("OK", {
-                  status: 200,
-                  headers: {
-                      "content-type": "application/json",
-                  },
-                })
-              } else {
-                response = await ai.run(model_name, chat);
-                tasks.push({ inputs: chat, response });
-                conversation = response.response;
+                if (obj.message.message_thread_id == 334) {
+                    let model_number = 5
+                    await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+                    return new Response("OK", {
+                      status: 200,
+                      headers: {
+                          "content-type": "application/json",
+                      },
+                    })
+                }
               }
-  
+              response = await ai.run(model_name, chat);
+              tasks.push({ inputs: chat, response });
+              conversation = response.response;
               const messages = [];
               let currentMessage = '';
               
@@ -130,7 +137,61 @@ export default {
             },
           })
         }
-    } else if (path == '/genImage1.png' && request.method === 'GET') {
+    } else if (path == '/genImage3.png' && request.method === 'GET') {
+        const searchParams = url.searchParams;
+        const raw_text = searchParams.get('text');
+        const file_id = decodeURIComponent(raw_text || '');
+        const ai = new Ai(env.AI);
+        // fetch image from telegram based on the file_id
+        const image1 = await fetch(`https://api.telegram.org/bot${tg_bot_token}/getFile?file_id=${file_id}`);
+        const image1_json = await image1.json();
+        const file_path = image1_json.result.file_path;
+
+        // Picture of a dog
+        const exampleInputImage = await fetch(
+          `https://api.telegram.org/file/bot${tg_bot_token}/${file_path}`
+        );
+    
+        // Mask of dog
+        const exampleMask = await fetch(
+          "https://pub-1fb693cb11cc46b2b2f656f51e015a2c.r2.dev/dog-mask.png"
+        );
+    
+        const inputs = {
+          prompt: "Change to a lion",
+          image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
+          //mask: [...new Uint8Array(await exampleMask.arrayBuffer())],
+        };
+    
+        const response =
+          await ai.run(
+            "@cf/runwayml/stable-diffusion-v1-5-inpainting",
+            inputs
+          );
+    
+        return new Response(response, {
+          headers: {
+            "content-type": "image/png",
+          },
+        });
+    } else if (path == '/genImage4.png' && request.method === 'GET') {
+        const searchParams = url.searchParams;
+        const raw_text = searchParams.get('text');
+        const text = decodeURIComponent(raw_text || '');
+        const ai = new Ai(env.AI);
+        const inputs = {
+          prompt: text,
+        };
+        const response = await ai.run(
+          "@cf/stabilityai/stable-diffusion-xl-base-1.0",
+          inputs
+        );
+        return new Response(response, {
+          headers: {
+            "content-type": "image/png",
+          },
+        });
+    } else if (path == '/genImage5.png' && request.method === 'GET') {
         const searchParams = url.searchParams;
         const raw_text = searchParams.get('text');
         const text = decodeURIComponent(raw_text || '');
