@@ -177,7 +177,16 @@ export default {
 						  headers: { 'Content-Type': 'text/plain' }, // Set the content type to plain text
 						});*/
 					}
-				}
+				} else if (obj.hasOwnProperty('callback_query')) {
+                    // get the data text and generate photo and send as reply to it with model_number based on thread id
+                    const data = obj.callback_query.data
+                    const chat_id = obj.callback_query.message.chat.id
+                    const message_id = obj.callback_query.message.message_id
+                    let model_number = 1
+                    if (obj.callback_query.message.message_thread_id == 6830) {
+                        model_number = 2
+                    }
+                }
 				return new Response("OK", {
 					status: 200,
 					headers: {
@@ -301,16 +310,29 @@ export default {
 		}
 
 		async function handlePhotoEvent(chat_id, reply_to_message_id, command, model_number) {
+            let reply_markup = {
+                inline_keyboard: [
+                    [{
+                        text: "Generate More",
+                        callback_data: command
+                    }]
+                ]
+            }
+            let json = {
+                chat_id: chat_id,
+                reply_to_message_id: reply_to_message_id,
+                photo: `https://ai.hashhackersapi.workers.dev/genImage${model_number}.png?text=` + encodeURIComponent(command),
+            }
+            if (model_number == 1) {
+                // push reply_markup to json as new
+                json.reply_markup = reply_markup
+            }
 			const telegram_res = await fetch(`https://api.telegram.org/bot${tg_bot_token}/sendPhoto`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({
-					chat_id: chat_id,
-					reply_to_message_id: reply_to_message_id,
-					photo: `https://ai.hashhackersapi.workers.dev/genImage${model_number}.png?text=` + encodeURIComponent(command),
-				}),
+				body: JSON.stringify(json),
 			});
 			const telegram_res_json = await telegram_res.json();
 			console.log(telegram_res_json)
