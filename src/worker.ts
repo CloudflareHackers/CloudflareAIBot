@@ -36,7 +36,93 @@ export default {
 								model_name = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
 							} else if (obj.message.message_thread_id && obj.message.message_thread_id == 7845) {
                                 model_name = "@hf/google/gemma-7b-it"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7924) {
+                                model_name = "@cf/deepseek-ai/deepseek-math-7b-base"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7927) {
+                                model_name = "@cf/deepseek-ai/deepseek-math-7b-instruct"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7932) {
+                                model_name = "@cf/thebloke/discolm-german-7b-v1-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7938) {
+                                model_name = "@cf/tiiuae/falcon-7b-instruct"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7946) {
+                                model_name = "@hf/nousresearch/hermes-2-pro-mistral-7b"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7953) {
+                                model_name = "@hf/thebloke/llama-2-13b-chat-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7956) {
+                                model_name = "@hf/thebloke/llamaguard-7b-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7959) {
+                                model_name = "@hf/thebloke/mistral-7b-instruct-v0.1-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7962) {
+                                model_name = "@hf/mistralai/mistral-7b-instruct-v0.2"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7965) {
+                                model_name = "@hf/thebloke/neural-chat-7b-v3-1-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7968) {
+                                model_name = "@cf/openchat/openchat-3.5-0106"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7971) {
+                                model_name = "@hf/thebloke/openhermes-2.5-mistral-7b-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7974) {
+                                model_name = "@cf/microsoft/phi-2"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7978) {
+                                model_name = "@cf/qwen/qwen1.5-0.5b-chat"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7981) {
+                                model_name = "@cf/qwen/qwen1.5-1.8b-chat"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7984) {
+                                model_name = "@cf/qwen/qwen1.5-7b-chat"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7988) {
+                                model_name = "@cf/qwen/qwen1.5-14b-chat"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7991) {
+                                model_name = "@cf/defog/sqlcoder-7b-2"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7994) {
+                                model_name = "@hf/nexusflow/starling-lm-7b-beta"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7997) {
+                                model_name = "@cf/tinyllama/tinyllama-1.1b-chat-v1.0"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 8000) {
+                                model_name = "@hf/thebloke/zephyr-7b-beta-awq"
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7600) {
+								let model_number = 1
+								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+								return new Response("OK", {
+									status: 200,
+									headers: {
+										"content-type": "application/json",
+									},
+								})
                             }
+							if (obj.message.message_thread_id && obj.message.message_thread_id == 334) {
+								let model_number = 5
+								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+								return new Response("OK", {
+									status: 200,
+									headers: {
+										"content-type": "application/json",
+									},
+								})
+							}
+                            if (obj.message.message_thread_id && obj.message.message_thread_id == 6830 && !obj.message.photo) {
+                                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=Please send a photo", {
+                                    method: "GET"
+                                });
+                                return new Response("OK", {
+                                    status: 200,
+                                    headers: {
+                                        "content-type": "application/json",
+                                    },
+                                })
+                            } else {
+                                let message = "This is a Basic Topic, You need to choose the topics from the chat to get the response from different AI Chat Models.\n\nOnly Image Models can send images."
+                                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=" + message, {
+                                    method: "GET"
+                                });
+                                return new Response("OK", {
+                                    status: 200,
+                                    headers: {
+                                        "content-type": "application/json",
+                                    },
+                                })
+                            }
+
+
+
 							await sendChatAction(obj.message.chat.id, action);
 							const tasks = [];
 							const ai = new Ai(env.AI);
@@ -53,48 +139,7 @@ export default {
 							};
 							let response
 							let conversation
-                            if (obj.message.message_thread_id == 7600) {
-								let model_number = 1
-								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
-								return new Response("OK", {
-									status: 200,
-									headers: {
-										"content-type": "application/json",
-									},
-								})
-                            }
-							if (obj.message.message_thread_id == 334) {
-								let model_number = 5
-								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
-								return new Response("OK", {
-									status: 200,
-									headers: {
-										"content-type": "application/json",
-									},
-								})
-							}
-                            if (obj.message.message_thread_id == 6830 && !obj.message.photo) {
-                                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=Please send a photo", {
-                                    method: "GET"
-                                });
-                                return new Response("OK", {
-                                    status: 200,
-                                    headers: {
-                                        "content-type": "application/json",
-                                    },
-                                })
-                            }
-							if (command.startsWith("/")) {
-								await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=Made basically for https://t.me/%2BBSEojDWCtx1jOTFh", {
-									method: "GET"
-								});
-								return new Response("OK", {
-									status: 200,
-									headers: {
-										"content-type": "application/json",
-									},
-								})
-							}
+
                             response = await ai.run(model_name, chat);
                             tasks.push({
                                 inputs: chat,
