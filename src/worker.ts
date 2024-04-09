@@ -151,7 +151,7 @@ export default {
                                     })
                                 }
                                 let caption = obj.message.caption
-								let model_number = 3
+								let model_number = 2
 								let file_id = obj.message.photo[obj.message.photo.length - 1].file_id
 								console.log(file_id)
 								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, file_id, model_number)
@@ -185,7 +185,7 @@ export default {
 					},
 				})
 			}
-		} else if (path == '/genImage3.png' && request.method === 'GET') {
+		} else if (path == '/genImage2.png' && request.method === 'GET') {
 			const searchParams = url.searchParams;
 			const file_id = decodeURIComponent(searchParams.get('text') || '');
             const caption = decodeURIComponent(searchParams.get('caption') || 'turn into painting');
@@ -199,29 +199,22 @@ export default {
 			const exampleInputImage = await fetch(
 				`https://api.telegram.org/file/bot${tg_bot_token}/${file_path}`
 			);
-
-			// Mask of dog
-			const exampleMask = await fetch(
-				`https://api.telegram.org/file/bot${tg_bot_token}/${file_path}`
-			);
-
-			const inputs = {
-				prompt: caption,
-				image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
-				mask: [...new Uint8Array(await exampleMask.arrayBuffer())],
-			};
-
-			const response =
-				await ai.run(
-					"@cf/runwayml/stable-diffusion-v1-5-inpainting",
-					inputs
-				);
-
-			return new Response(response, {
-				headers: {
-					"content-type": "image/png",
-				},
-			});
+            
+            const inputs = {
+                prompt: "Change to a lion",
+                image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
+              };
+          
+              const response = await ai.run(
+                "@cf/runwayml/stable-diffusion-v1-5-img2img",
+                inputs
+              );
+          
+              return new Response(response, {
+                headers: {
+                  "content-type": "image/png",
+                },
+              });
 		} else if (path == '/genImage4.png' && request.method === 'GET') {
 			const searchParams = url.searchParams;
 			const raw_text = searchParams.get('text');
