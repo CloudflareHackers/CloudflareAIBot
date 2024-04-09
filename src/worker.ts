@@ -54,16 +54,14 @@ export default {
 							let response
 							let conversation
                             if (obj.message.message_thread_id == 7600 && obj.message.photo) {
-                                let model_number = 1
-                                let file_id = obj.message.photo[obj.message.photo.length - 1].file_id
-                                console.log(file_id)
-                                await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, file_id, model_number)
-                                return new Response("OK", {
-                                    status: 200,
-                                    headers: {
-                                        "content-type": "application/json",
-                                    },
-                                })
+								let model_number = 1
+								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+								return new Response("OK", {
+									status: 200,
+									headers: {
+										"content-type": "application/json",
+									},
+								})
                             }
 							if (obj.message.message_thread_id == 6807) {
 								let model_number = 4
