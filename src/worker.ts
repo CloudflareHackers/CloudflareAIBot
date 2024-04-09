@@ -107,7 +107,7 @@ export default {
                                     },
                                 })
                             } else {
-                                let message = "This is a Basic Topic, You need to choose the topics from the chat to get the response from different AI Chat Models.\n\nOnly Image Models can send images."
+                                let message = "This is a Basic Topic, You need to choose the topics from the chat to get the response from different AI Chat Models.\n\nOnly Image Models can send images.\n\nSource Code: https://github.com/CloudflareHackers/CloudflareAIBot"
                                 await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=" + message, {
                                     method: "GET"
                                 });
