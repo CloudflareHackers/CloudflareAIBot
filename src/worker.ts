@@ -10,7 +10,6 @@ export interface Env {
 export default {
 	async fetch(request: Request, env: Env) {
 		const tg_bot_token = env.TG_BOT_TOKEN;
-		console.log(tg_bot_token)
 		const url = new URL(request.url);
 		const path = url.pathname;
 		const maxMessageLength = 4096;
