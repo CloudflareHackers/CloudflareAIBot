@@ -56,6 +56,28 @@ export default {
                   },
                 })
               } else if (obj.message.message_thread_id) {
+                if (obj.message.message_thread_id == 6830) {
+                    if (!obj.message.photo) {
+                        await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id="+obj.message.chat.id+"&reply_to_message_id="+obj.message.message_id+"&text=Please send a photo", {
+                            method: "GET"
+                        });
+                        return new Response("OK", {
+                            status: 200,
+                            headers: {
+                                "content-type": "application/json",
+                            },
+                        })
+                    }
+                    let model_number = 3
+                    let file_id = obj.message.photo[obj.message.photo.length - 1].file_id
+                    await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, file_id, model_number)
+                    return new Response("OK", {
+                        status: 200,
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                    })
+                }
                 if (obj.message.message_thread_id == 6807) {
                     let model_number = 4
                     await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
