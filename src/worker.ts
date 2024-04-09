@@ -67,7 +67,7 @@ export default {
                             } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7981) {
                                 model_name = "@cf/qwen/qwen1.5-1.8b-chat"
                             } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7984) {
-                                model_name = "@cf/qwen/qwen1.5-7b-chat"
+                                model_name = "@cf/qwen/qwen1.5-7b-chat-awq"
                             } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7988) {
                                 model_name = "@cf/qwen/qwen1.5-14b-chat-awq"
                             } else if (obj.message.message_thread_id && obj.message.message_thread_id == 7991) {
