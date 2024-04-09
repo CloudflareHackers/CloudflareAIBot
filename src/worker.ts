@@ -182,10 +182,11 @@ export default {
                     const data = obj.callback_query.data
                     const chat_id = obj.callback_query.message.chat.id
                     const message_id = obj.callback_query.message.message_id
-                    let model_number = 1
+                    let model_number = 2
                     if (obj.callback_query.message.message_thread_id == 6830) {
                         model_number = 2
                     }
+                    await handlePhotoEvent(chat_id, message_id, data, model_number)
                 }
 				return new Response("OK", {
 					status: 200,
