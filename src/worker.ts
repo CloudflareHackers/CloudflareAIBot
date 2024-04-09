@@ -87,8 +87,7 @@ export default {
 										"content-type": "application/json",
 									},
 								})
-                            }
-							if (obj.message.message_thread_id && obj.message.message_thread_id == 334) {
+                            } else if (obj.message.message_thread_id && obj.message.message_thread_id == 334) {
 								let model_number = 5
 								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
 								return new Response("OK", {
@@ -97,8 +96,7 @@ export default {
 										"content-type": "application/json",
 									},
 								})
-							}
-                            if (obj.message.message_thread_id && obj.message.message_thread_id == 6830 && !obj.message.photo) {
+							} else if (obj.message.message_thread_id && obj.message.message_thread_id == 6830 && !obj.message.photo) {
                                 await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=Please send a photo", {
                                     method: "GET"
                                 });
