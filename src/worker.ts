@@ -179,6 +179,12 @@ export default {
                         model_number = 5
                     }
                     await handlePhotoEvent(chat_id, message_id, data, model_number)
+                    return new Response("OK", {
+                        status: 200,
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                    })
                 }
 				return new Response("OK", {
 					status: 200,
