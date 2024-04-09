@@ -61,6 +61,12 @@ export default {
                     model_number = 1
                 }
                 await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
+                return new Response("OK", {
+                  status: 200,
+                  headers: {
+                      "content-type": "application/json",
+                  },
+                })
               } else {
                 response = await ai.run(model_name, chat);
                 tasks.push({ inputs: chat, response });
