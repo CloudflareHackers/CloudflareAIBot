@@ -46,7 +46,7 @@ export default {
               let response
               let conversation
               if (command.startsWith("/")) {
-                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id="+obj.message.chat.id+"&reply_to_message_id="+obj.message.message_id+"&text=If you send me something, I'll ask the AI to reply, if your text contains 'image' word in it, i'll send an image.", {
+                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id="+obj.message.chat.id+"&reply_to_message_id="+obj.message.message_id+"&text=Made basically for https://t.me/%2BBSEojDWCtx1jOTFh", {
                   method: "GET"
                 });
                 return new Response("OK", {
