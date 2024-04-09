@@ -21,6 +21,12 @@ export default {
 				if (obj.hasOwnProperty('message')) {
 					if (obj.hasOwnProperty('message')) {
 						if (obj.message.hasOwnProperty('text')) {
+                            if (obj.message.chat.type == "private") {
+                                let message = "The Bot works in this Group: https://t.me/+BSEojDWCtx1jOTFh"
+                                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=" + message, {
+                                    method: "GET"
+                                });
+                            }
 							const command = obj.message.text
 							const replied_to_message_text = obj.message.reply_to_message?.text || ""
 							let action = "typing"
