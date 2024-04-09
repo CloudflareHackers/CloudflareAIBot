@@ -314,7 +314,7 @@ export default {
                 inline_keyboard: [
                     [{
                         text: "Generate More",
-                        callback_data: command + random
+                        callback_data: text_for_button + random
                     }]
                 ]
             }
