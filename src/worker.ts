@@ -309,7 +309,7 @@ export default {
 
 		async function handlePhotoEvent(chat_id, reply_to_message_id, command, model_number) {
             let random = Math.floor(Math.random() * 1000000)
-            let text_for_button = command.length > 10 ? command.substring(0, 10) + "..." : command
+            let text_for_button = command.length > 30 ? command.substring(0, 30) + "  " : command
             let reply_markup = {
                 inline_keyboard: [
                     [{
