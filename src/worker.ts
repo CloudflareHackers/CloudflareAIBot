@@ -371,6 +371,7 @@ export default {
                 chat_id: chat_id,
                 reply_to_message_id: reply_to_message_id,
                 photo: `https://ai.hashhackersapi.workers.dev/genImage${model_number}.png?text=` + encodeURIComponent(command),
+                caption: command
             }
             if (model_number == 1 || model_number == 5) {
                 // push reply_markup to json as new
