@@ -63,16 +63,6 @@ export default {
 									},
 								})
                             }
-							if (obj.message.message_thread_id == 6807) {
-								let model_number = 4
-								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
-								return new Response("OK", {
-									status: 200,
-									headers: {
-										"content-type": "application/json",
-									},
-								})
-							}
 							if (obj.message.message_thread_id == 334) {
 								let model_number = 5
 								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
@@ -185,6 +175,8 @@ export default {
                     let model_number = 1
                     if (obj.callback_query.message.message_thread_id == 7600) {
                         model_number = 1
+                    } else if (obj.callback_query.message.message_thread_id == 334) {
+                        model_number = 5
                     }
                     await handlePhotoEvent(chat_id, message_id, data, model_number)
                 }
@@ -324,7 +316,7 @@ export default {
                 reply_to_message_id: reply_to_message_id,
                 photo: `https://ai.hashhackersapi.workers.dev/genImage${model_number}.png?text=` + encodeURIComponent(command),
             }
-            if (model_number == 1) {
+            if (model_number == 1 || model_number == 5) {
                 // push reply_markup to json as new
                 json.reply_markup = reply_markup
             }
