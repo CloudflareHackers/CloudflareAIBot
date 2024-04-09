@@ -53,6 +53,18 @@ export default {
 							};
 							let response
 							let conversation
+                            if (obj.message.message_thread_id == 7600 && obj.message.photo) {
+                                let model_number = 1
+                                let file_id = obj.message.photo[obj.message.photo.length - 1].file_id
+                                console.log(file_id)
+                                await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, file_id, model_number)
+                                return new Response("OK", {
+                                    status: 200,
+                                    headers: {
+                                        "content-type": "application/json",
+                                    },
+                                })
+                            }
 							if (obj.message.message_thread_id == 6807) {
 								let model_number = 4
 								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
@@ -207,6 +219,25 @@ export default {
           
               const response = await ai.run(
                 "@cf/runwayml/stable-diffusion-v1-5-img2img",
+                inputs
+              );
+          
+              return new Response(response, {
+                headers: {
+                  "content-type": "image/png",
+                },
+              });
+		} else if (path == '/genImage1.png' && request.method === 'GET') {
+			const searchParams = url.searchParams;
+			const raw_text = searchParams.get('text');
+			const text = decodeURIComponent(raw_text || '');
+			const ai = new Ai(env.AI);
+			const inputs = {
+                prompt: text,
+              };
+          
+              const response = await ai.run(
+                "@cf/lykon/dreamshaper-8-lcm",
                 inputs
               );
           
