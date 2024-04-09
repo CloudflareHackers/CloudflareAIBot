@@ -70,6 +70,7 @@ export default {
                     }
                     let model_number = 3
                     let file_id = obj.message.photo[obj.message.photo.length - 1].file_id
+                    console.log(file_id)
                     await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, file_id, model_number)
                     return new Response("OK", {
                         status: 200,
@@ -252,7 +253,7 @@ export default {
     }); 
     }
 
-    async function handlePhotoEvent(chat_id : string, reply_to_message_id, command : string, model_number) {
+    async function handlePhotoEvent(chat_id, reply_to_message_id, command, model_number) {
         const telegram_res = await fetch(`https://api.telegram.org/bot${tg_bot_token}/sendPhoto`, {
             method: 'POST',
             headers: {
