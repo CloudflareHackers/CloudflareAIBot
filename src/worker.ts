@@ -34,21 +34,10 @@ export default {
 								model_name = "@hf/thebloke/deepseek-coder-6.7b-base-awq"
 							} else if (obj.message.message_thread_id && obj.message.message_thread_id == 786) {
 								model_name = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
-							}
-							await sendChatAction(obj.message.chat.id, action);
-                            if (obj.message.message_thread_id == 7845) {
-                                const ai = new Ai(env.AI);
-
-                                const response = await ai.run("@cf/google/gemma-7b-it-lora", {
-                                  prompt: command,
-                                  raw: true, //skip applying the default chat template
-                                  lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
-                                });
-                                await fetch("https://api.telegram.org/bot" + tg_bot_token + "/SendMessage?disable_web_page_preview=true&chat_id=" + obj.message.chat.id + "&reply_to_message_id=" + obj.message.message_id + "&text=" + response, {
-                                    method: "GET"
-                                });
-                                return Response.json(response);
+							} else if (obj.message.message_thread_id && obj.message.message_thread_id == 7845) {
+                                model_name = "@hf/google/gemma-7b-it"
                             }
+							await sendChatAction(obj.message.chat.id, action);
 							const tasks = [];
 							const ai = new Ai(env.AI);
 							let chat = {
