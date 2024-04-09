@@ -303,11 +303,12 @@ export default {
 		}
 
 		async function handlePhotoEvent(chat_id, reply_to_message_id, command, model_number) {
+            let random = Math.floor(Math.random() * 1000000)
             let reply_markup = {
                 inline_keyboard: [
                     [{
                         text: "Generate More",
-                        callback_data: command
+                        callback_data: command + random
                     }]
                 ]
             }
