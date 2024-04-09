@@ -2,7 +2,7 @@ import { Ai } from "@cloudflare/ai";
 
 export interface Env {
   AI: any;
-  TG_BOT_TOKEN: string;
+  TG_BOT_TOKEN: string; 
 }
 
 export default {
