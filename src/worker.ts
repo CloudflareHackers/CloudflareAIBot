@@ -168,9 +168,9 @@ export default {
 					}
 				} else if (obj.hasOwnProperty('callback_query')) {
                     // get the data text and generate photo and send as reply to it with model_number based on thread id
-                    const data = obj.callback_query.data
+                    const data = obj.callback_query.message.reply_to_message.text
                     const chat_id = obj.callback_query.message.chat.id
-                    const message_id = obj.callback_query.message.message_id
+                    const message_id = obj.callback_query.data
                     let model_number = 1
                     if (obj.callback_query.message.message_thread_id == 7600) {
                         model_number = 1
@@ -314,7 +314,7 @@ export default {
                 inline_keyboard: [
                     [{
                         text: "Generate More",
-                        callback_data: text_for_button + random
+                        callback_data: reply_to_message_id
                     }]
                 ]
             }
