@@ -53,7 +53,7 @@ export default {
 							};
 							let response
 							let conversation
-                            if (obj.message.message_thread_id == 7600 && obj.message.photo) {
+                            if (obj.message.message_thread_id == 7600) {
 								let model_number = 1
 								await handlePhotoEvent(obj.message.chat.id, obj.message.message_id, command, model_number)
 								return new Response("OK", {
