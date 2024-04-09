@@ -201,7 +201,7 @@ export default {
 			);
             
             const inputs = {
-                prompt: "Change to a lion",
+                prompt: caption,
                 image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
               };
           
